@@ -39,7 +39,7 @@ if __name__ == '__main__':
         with open(fp, 'rb') as f:
             data = csv.DictReader(f)
             r = bch.process(data, session)
-            log.info(os.path.basename(fp), extra=r)
+            log.info('{} {}'.format(os.path.basename(fp), r))
     if args.diag:
         log.info('Diagnostic mode, rolling back')
         session.rollback()
