@@ -8,7 +8,7 @@ from pycds import Obs
 
 log = logging.getLogger(__name__)
 
-def process(data, sesh):
+def process(data, sesh, diag):
     successes, failures, skips = 0, 0, 0
     for row in data:
         t = datetime.strptime(row['obs_time'], '%Y-%m-%d %H:%M:%S')
@@ -20,7 +20,14 @@ def process(data, sesh):
             if row['datum'] == 'NA':
                 skips += 1
                 continue
+            if row['datum'] == '':
+                skips += 1
+                continue
+            if row['datum'] == '  +':
+                skips += 1
+                continue
             else:
+                log.error('Failed to insert obs {}'.format(row))
                 raise e
         o = Obs(time=t, datum=datum, history_id=hist, vars_id=var)
         log.debug(o)
@@ -36,5 +43,10 @@ def process(data, sesh):
         except:
             log.error("Failed to insert {}".format(o), exc_info=True)
             failures += 1
+
+    if diag:
+        sesh.rollback()
+    else:
+        sesh.commit()
 
     return {'successes': successes, 'skips': skips, 'failures': failures}

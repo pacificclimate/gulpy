@@ -36,15 +36,11 @@ if __name__ == '__main__':
         fp = line.strip()
         if not fp or fp.startswith('#'):
             continue
+        log.info('Processing {}'.format(fp))
         with open(fp, 'rb') as f:
             data = csv.DictReader(f)
-            r = bch.process(data, session)
-            log.info('{} {}'.format(os.path.basename(fp), r))
-    if args.diag:
-        log.info('Diagnostic mode, rolling back')
-        session.rollback()
-    else:
-        log.info('Committing the session')
-        session.commit()
+            r = bch.process(data, session, args.diag)
+            log.info('Done file: {}'.format(r))
 
+    session.commit()
     log.info('DONE')
