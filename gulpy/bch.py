@@ -18,6 +18,7 @@ def process(data, sesh):
             datum = float(row['datum'])
         except ValueError as e:
             if row['datum'] == 'NA':
+                skips += 1
                 continue
             else:
                 raise e
