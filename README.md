@@ -43,7 +43,7 @@ pip install -i https://pypi.pacificclimate.org/simple/ .
 ## Use
 The `import_bch_flat` script accepts the following arguments:
 
-### -c CONNECTION, --c CONNECTION_STRING (required)
+### -c CONNECTION, --connection_string CONNECTION (required)
 The connection string gives the address of the database to add data to, using the form `dialect://username:password@host/database`. For example, the MSC database would be `postgresql://msc_rw:PASSWORD@dbmsc.pcic.uvic.ca/msc`
 
 ### filelist (required)
