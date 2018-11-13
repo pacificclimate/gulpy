@@ -15,12 +15,12 @@ if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('-c', '--connection_string', required=True,
                         help='PostgreSQL connection string of form:\n\tdialect+driver://username:password@host:port/database\nExamples:\n\tpostgresql://scott:tiger@localhost/mydatabase\n\tpostgresql+psycopg2://scott:tiger@localhost/mydatabase\n\tpostgresql+pg8000://scott:tiger@localhost/mydatabase')
-    parser.add_argument('-D', '--diag', action="store_true", default = False,
+    parser.add_argument('-D', '--diagnostic', action="store_true", default = False,
                         help="Turn on diagnostic mode (no commits)")
     parser.add_argument('-b', '--batch_size',
                         help='Number of observations to insert with each batch',
                         default=250)
-    parser.add_argument('--log_level', default = 'INFO',
+    parser.add_argument('-l', '--log_level', default = 'INFO',
                         choices=['DEBUG', 'INFO', 'WARNING', 'ERROR', 'CRITICAL'],
                         help='Set log level: DEBUG, INFO, WARNING, ERROR, CRITICAL.')
     parser.add_argument('filelist', nargs=argparse.REMAINDER)
@@ -46,4 +46,5 @@ if __name__ == '__main__':
             log.info('Done file: {}'.format(r))
 
     session.commit()
+    session.close()
     log.info('DONE')

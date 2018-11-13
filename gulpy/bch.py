@@ -9,7 +9,8 @@ from pycds import Obs
 log = logging.getLogger(__name__)
 
 def process(data, sesh, diag, batch_size):
-    successes, failures, skips, batch = 0, 0, 0, 0
+    successes, failures, skips = 0, 0, 0
+    batch = 0
     for row in data:
         t = datetime.strptime(row['obs_time'], '%Y-%m-%d %H:%M:%S')
         hist = int(row['history_id'])
@@ -44,7 +45,7 @@ def process(data, sesh, diag, batch_size):
             log.error("Failed to insert {}".format(o), exc_info=True)
             failures += 1
 
-        #commit current insertions once every batch_size insertions.
+        # Commit current insertions once every batch_size insertions
         if batch >= batch_size:
             if diag:
                 log.info("Rolling back a batch of {} test insertions".format(batch))

@@ -1,7 +1,7 @@
 # gulpy
 
 ## Purpose
-The scripts in this repository insert observations made by weather stations into PCIC's CRMP or DBMSC databases.
+The scripts in this repository insert observations made by weather stations into PCIC's CRMP or MSC databases.
 
 `import_bch_flat.py` reads a file containing a list of datafiles, one per line. An example filelist:
 
@@ -41,24 +41,24 @@ pip install -i https://pypi.pacificclimate.org/simple/ .
 ```
 
 ## Use
-The import_bch_flat script accepts the following arguments:
+The `import_bch_flat` script accepts the following arguments:
 
-### -c CONNECTION (required)
-The connection string gives the address of the database to add data to, using the form `dialect://username:password@host/database`
+### -c CONNECTION, --c CONNECTION_STRING (required)
+The connection string gives the address of the database to add data to, using the form `dialect://username:password@host/database`. For example, the MSC database would be `postgresql://msc_rw:PASSWORD@dbmsc.pcic.uvic.ca/msc`
 
 ### filelist (required)
 The location of a filelist containing the name of one datafile per line.
 
-### -b SIZE (optional)
+### -b SIZE, --batch_size SIZE (optional)
 Control how many inputs will be committed in each batch. The default is 250. Smaller batch sizes prevent running out of database resource locks when running the script in parallel; larger batch sizes allow the script to run faster if it is expected to be the only thing interacting with the database.
 
-### -D (optional)
+### -D, --diagnostic (optional)
 Turn on Diagnostic Mode. In Diagnostic Mode, no data will be added to the database. Allows checking inputs without actually committing them.
 
-### -log_level LEVEL (optional)
+### -l LEVEL, --log_level LEVEL (optional)
 Control the verbosity of log output. In order from most to least verbose, the log levels are: DEBUG, INFO, WARNING, ERROR, CRITICAL
 
-### -h (optional)
+### -h, --help (optional)
 Display a help message and exit without opening files or making database changes.
 
 ## Troubleshooting
