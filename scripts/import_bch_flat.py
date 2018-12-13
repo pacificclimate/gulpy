@@ -42,7 +42,7 @@ if __name__ == '__main__':
         log.info('Processing {}'.format(fp))
         with open(fp, 'rb') as f:
             data = csv.DictReader(f)
-            r = bch.process(data, session, args.diag, int(args.batch_size))
+            r = bch.process(data, session, args.diagnostic, int(args.batch_size))
             log.info('Done file: {}'.format(r))
 
     session.commit()
